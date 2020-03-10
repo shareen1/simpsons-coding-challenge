@@ -57,11 +57,8 @@ public class JsonRW {
 		String filename = "src/main/resources/data/phrases.json";
 		// Iterate over employee array
 		JSONArray characterList = readJsonFile(filename);
-		// characterList.forEach(ch -> addComment((JSONObject) ch));
 		return characterList;
 	}
-
-
 
 	private static void parseCharacterObject(JSONObject ch) {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
@@ -102,14 +99,8 @@ public class JsonRW {
 	private static void addToCommentSet(JSONObject ch, Set<String> comentlist, String characterId) {
 		String character = (String) ch.get("character");
 		String phrase = (String) ch.get("phrase");
-		if (characterId.equals( character)) {
+		if (characterId.equals(character)) {
 			comentlist.add(phrase);
 		}
 	}
-
-	public static void main(String[] args) {
-		// readJsonFile();
-
-	}
-
 }

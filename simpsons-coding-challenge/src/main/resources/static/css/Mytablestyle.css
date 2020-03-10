@@ -1,0 +1,19 @@
+table {
+font-family: arial, sans-serif;
+border-collapse: collapse;
+width: 100%;
+}
+td, th {
+border: 1px solid #dddddd;
+text-align: left;
+padding: 8px;
+}
+.alternate tr:nth-child(2n) {
+background-color: silver;
+}
+.alternate tr {
+background-color: white;
+}
+.alternate tr:nth-child(2n):hover, .alternate tr:hover {
+background-color: grey;
+}
