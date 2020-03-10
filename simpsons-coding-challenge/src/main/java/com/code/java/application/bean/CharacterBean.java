@@ -1,12 +1,12 @@
 package com.code.java.application.bean;
 
-import java.util.List;
+import java.io.Serializable;
 import java.util.Set;
 
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class CharacterBean {
+public class CharacterBean  implements Serializable{
 	private String Id;
 	private String firstName;
 	private String lastName;

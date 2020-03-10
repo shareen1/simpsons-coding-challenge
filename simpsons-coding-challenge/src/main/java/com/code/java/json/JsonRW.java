@@ -89,6 +89,7 @@ public class JsonRW {
 		Long age = (Long) ch.get("age");
 		characterbean.setAge(age);
 		MyCache.addToList(id, characterbean);
+		context.close();
 	}
 
 	private static Set<String> parseComment(CharacterBean characterbean, String id) {
