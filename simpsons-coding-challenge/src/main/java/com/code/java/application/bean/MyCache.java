@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 public class MyCache {
-	static HashMap<String, CharacterBean> characterList = new HashMap<>();
+	public static HashMap<String, CharacterBean> characterList = new HashMap<>();
 
 	public static void addToList(String string, CharacterBean bean) {
 
@@ -21,7 +21,7 @@ public class MyCache {
 
 	}
 
-	public CharacterBean getBeanById(String id) {
+	public static CharacterBean getBeanById(String id) {
 		return characterList.get(id);
 
 	}

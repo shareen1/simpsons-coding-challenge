@@ -13,14 +13,7 @@ public class CharacterService {
 	@Cacheable("characterbean")
 	@Bean
 	public List<CharacterBean> findAllCharacter(){
-		/*try {
-			Thread.sleep(1000*5);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new Student(id,"Sajal" ,"V");*/
-		return null;
+		return CharacterServiceImpl.findAllCharacter();
 		
 	}
 

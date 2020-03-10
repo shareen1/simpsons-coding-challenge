@@ -19,8 +19,10 @@ import com.code.java.application.bean.MyCache;
 @Component
 public class JsonRW {
 
-	// context.register(CharacterBean.class);
-	// context.refresh();
+	public static void loadChacheOnStart() {
+		readCharacter();
+		System.out.print("cache loaded");
+	}
 
 	public static JSONArray readJsonFile(String filename) {
 		// JSON parser object to parse read file
@@ -42,7 +44,7 @@ public class JsonRW {
 		return jsonList;
 	}
 
-	public void readCharacter() {
+	public static void readCharacter() {
 
 		String filename = "src/main/resources/data/characters.json";
 		// Iterate over employee array
@@ -59,10 +61,7 @@ public class JsonRW {
 		return characterList;
 	}
 
-	private Object addComment(JSONObject ch) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	private static void parseCharacterObject(JSONObject ch) {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
@@ -102,7 +101,7 @@ public class JsonRW {
 	private static void addToCommentSet(JSONObject ch, Set<String> comentlist, String characterId) {
 		String character = (String) ch.get("character");
 		String phrase = (String) ch.get("phrase");
-		if (characterId == character) {
+		if (characterId.equals( character)) {
 			comentlist.add(phrase);
 		}
 	}

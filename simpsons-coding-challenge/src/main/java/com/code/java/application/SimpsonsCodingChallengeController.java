@@ -1,5 +1,7 @@
 package com.code.java.application;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,16 +18,18 @@ public class SimpsonsCodingChallengeController {
 	//CharacterBean chbean = (CharacterBean) context.getBean(CharacterBean.class);
 	@Autowired
 	CharacterService characterService;
-	/*@RequestMapping("/character/{id}")
-	public String hello(@RequestParam(name="name",defaultValue="Ajish") String name)
-	{
-		return "hello ............."+name;
-	}*/
+	
 	 @RequestMapping(value = "/character")   
 	public CharacterBean findCharacterById(@RequestParam("id") String personId) {
 		System.out.println("Searching by ID  : " + personId);
 		return characterService.getCharacterById(personId);
 	}
 	
+	 @RequestMapping(value = "/characterlist")
+		public List<CharacterBean> findAllCharacter() {
+			System.out.println("Searching all List " );		
+			return characterService.findAllCharacter();
 
+	}
+	 
 }
