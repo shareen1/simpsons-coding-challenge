@@ -2,18 +2,14 @@ package com.code.java.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.code.java.application.bean.CharacterBean;
-import com.code.java.json.JsonRW;
+import com.code.java.application.json.JsonRW;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
-@EnableCaching
-
-@ComponentScan ({"com.code.java.application.bean", "com.code.java.applicationService","com.code.java.application"})
+@SpringBootApplication
+@ComponentScan ({"com.code.java.application.bean", "com.code.java.application.service","com.code.java.application","com.code.java.application.controller","com.code.java.application.json"})
 public class SimpsonsCodingChallengeApplication {
 
 	public static void main(String[] args) {

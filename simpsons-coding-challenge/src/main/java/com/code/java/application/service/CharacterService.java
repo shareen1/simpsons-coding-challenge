@@ -1,6 +1,7 @@
-package com.code.java.applicationService;
+package com.code.java.application.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +13,7 @@ import com.code.java.application.bean.CharacterBean;
 public class CharacterService {
 	@Cacheable("characterbean")
 	@Bean
-	public List<CharacterBean> findAllCharacter(){
+	public Set<CharacterBean> findAllCharacter(){
 		return CharacterServiceImpl.findAllCharacter();
 		
 	}
@@ -29,4 +30,9 @@ public class CharacterService {
 		
 	}
 	
+public CharacterBean addCharacter(CharacterBean characterBean){
+		
+		return CharacterServiceImpl.addCharacter(characterBean);
+		
+	}
 }

@@ -3,7 +3,7 @@ $(document).ready(function() {
 		"sAjaxSource" : "/characterlist",
 		"sAjaxDataProp" : "",
 		"order" : [ [ 0, "asc" ] ],
-		"aoColumns" : [ {
+		"aoColumns" : [  {
 			"mData" : "pictureURL",
 			"render" : function(mData, type, row) {
 				return '<img src="' + mData + '"  height="60" width="60" />';

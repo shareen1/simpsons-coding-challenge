@@ -1,15 +1,49 @@
 package com.code.java.application.bean;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
 public class MyCache {
-	public static HashMap<String, CharacterBean> characterList = new HashMap<>();
+	private static MyCache myCache = null; 
+	  	public HashMap<String, CharacterBean> getCharacterList() {
+		return characterList;
+	}
+	public void setCharacterList(HashMap<String, CharacterBean> characterList) {
+		this.characterList = characterList;
+	}
+	public Set<CharacterBean> getChlist() {
+		return chlist;
+	}
+	public void setChlist(Set<CharacterBean> chlist) {
+		this.chlist = chlist;
+	}
+		public static MyCache getInstance() 
+    { 
+        if (myCache == null) 
+        	myCache = new MyCache(); 
+  
+        return myCache; 
+    } 
+	public HashMap<String, CharacterBean> characterList = new HashMap<>();
+	public Set<CharacterBean> chlist = new HashSet<CharacterBean>();
 
-	public static void addToList(String string, CharacterBean bean) {
+	public  void addToList(String string, CharacterBean bean) {
 
 		characterList.put(string, bean);
+		setAllChar();
+	}
+	public Set<CharacterBean> setAllChar() {
+		
+		for (Entry<String, CharacterBean> chbean : MyCache.getInstance().characterList.entrySet()) {
+			CharacterBean myVal = chbean.getValue();
+			chlist.add(myVal);
+		}
+		
+		return chlist;
 	}
 
 	public void deleteCharacter(String id) {
@@ -18,10 +52,11 @@ public class MyCache {
 
 	public void updateCharacter(String id, CharacterBean bean) {
 		characterList.put(id, bean);
+		setAllChar();
 
 	}
 
-	public static CharacterBean getBeanById(String id) {
+	public  CharacterBean getBeanById(String id) {
 		return characterList.get(id);
 
 	}
@@ -54,8 +89,6 @@ public class MyCache {
 		Set<String> comentlist = mybean.getComments();
 		comentlist.add(comment);
 		mybean.setComments(comentlist, id);
-		;
-
 	}
 
 }

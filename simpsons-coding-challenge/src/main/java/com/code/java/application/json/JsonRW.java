@@ -1,4 +1,4 @@
-package com.code.java.json;
+package com.code.java.application.json;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -68,7 +68,7 @@ public class JsonRW {
 
 		// Get character object within list
 		String id = (String) ch.get("_id");
-		characterbean.setId(id);
+		characterbean.setChId(id);
 		Set<String> comments = parseComment(characterbean, id);
 		characterbean.setComments(comments, id);
 		characterbean.setComments(comments, id);
@@ -85,7 +85,7 @@ public class JsonRW {
 		characterbean.setPictureURL(pictureURL);
 		Long age = (Long) ch.get("age");
 		characterbean.setAge(age);
-		MyCache.addToList(id, characterbean);
+		 MyCache.getInstance().addToList(id, characterbean);
 		context.close();
 	}
 

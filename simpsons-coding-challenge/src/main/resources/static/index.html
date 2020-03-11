@@ -10,10 +10,18 @@
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 	<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 	<script src="datatable.js"></script>
+	<script type="text/javascript">
+	function clickFunction() {
+		window.location.replace('http://localhost:8083/createupdate.html');
+		}
+	</script>
 </head>
 
 <body>
 	<h1>Character List</h1>
+	<div id="postResultDiv" align="center"></div>
+	<p align="right"><button  type="button" class="btn btn-primary" onclick="clickFunction()">Create </button></p>
+	
 	<table id="personTable" class="display table table-striped table-bordered table-hover dataTable no-footer" cellspacing="0" width="100%">
     <thead>
             <tr>

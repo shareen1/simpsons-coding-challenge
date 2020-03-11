@@ -7,19 +7,24 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CharacterBean  implements Serializable{
-	private String Id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String chId;
 	private String firstName;
 	private String lastName;
 	private String pictureURL;
 	private Set<String> comments;
 	Long age;
 
-	public String getId() {
-		return Id;
+	public String getChId() {
+		return chId;
 	}
 
-	public void setId(String id) {
-		Id = id;
+	public void setChId(String id) {
+		chId = id;
 	}
 
 	public String getFirstName() {
