@@ -5,10 +5,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
+
+import org.springframework.context.annotation.Configuration;
+
 import java.util.Set;
 
 import com.code.java.application.json.JsonRW;
-
+@Configuration
 public class MyCache {
 	private static MyCache myCache = null;
 
@@ -36,7 +39,7 @@ public class MyCache {
 	}
 
 	public HashMap<String, CharacterBean> characterList = new HashMap<>();
-	public Set<CharacterBean> chlist = new HashSet<CharacterBean>();
+	public Set<CharacterBean> chlist = null;
 
 	public void addToList(String string, CharacterBean bean) {
 		
@@ -59,17 +62,21 @@ public class MyCache {
 	}
 
 	public Set<CharacterBean> setAllChar() {
-
+		chlist = new HashSet<CharacterBean>();
+		setCharacterList(characterList);
 		for (Entry<String, CharacterBean> chbean : MyCache.getInstance().characterList.entrySet()) {
 			CharacterBean myVal = chbean.getValue();
 			chlist.add(myVal);
 		}
-
+		System.out.println("size of chlist :" + chlist.size());
+		setChlist(chlist);
 		return chlist;
 	}
 
 	public void deleteCharacter(String id) {
 		characterList.remove(id);
+		setAllChar();
+		
 	}
 
 	public void updateCharacter(String id, CharacterBean bean) {

@@ -1,6 +1,5 @@
 package com.code.java.application.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URI;
@@ -8,12 +7,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,9 +37,9 @@ public class SimpsonsCodingChallengeController {
 	@Autowired
 	CharacterService characterService;
 
-	private int counter=0;
-	
-	 static String randomId;
+	private int counter = 0;
+
+	static String randomId;
 
 	@RequestMapping(value = "/character", method = RequestMethod.GET, produces = { "application/json" })
 	public CharacterBean findCharacterById(@RequestParam("id") String personId) {
@@ -57,17 +59,17 @@ public class SimpsonsCodingChallengeController {
 		System.out.println("Customer information saved successfully ::." + characterBean.getFirstName());
 		characterBean.setCounter(counter);
 		SecureRandom random = new SecureRandom();
-		 randomId = new BigInteger(130, random).toString(32);
-		if(null==characterBean.getChId() ) {
+		randomId = new BigInteger(130, random).toString(32);
+		if (null == characterBean.getChId()) {
 			characterBean.setChId(randomId);
-			
+
 		}
 		CharacterBean savedCBean = characterService.addCharacter(characterBean);
-		
+
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(savedCBean.getChId()).toUri();
 		ServiceResponse<CharacterBean> svcs = new ServiceResponse<>("success", savedCBean);
-        
+
 		return new ResponseEntity<>(svcs, HttpStatus.OK);
 	}
 
@@ -75,17 +77,24 @@ public class SimpsonsCodingChallengeController {
 	public ResponseEntity<Object> createImage(@RequestParam("image") MultipartFile image) {
 
 		System.out.println("inside createImage..........");
-		byte[] design =null ;
+		byte[] design = null;
 		try {
 			design = image.getBytes();
-           
-			counter=counter+1;
-			Path file = Files.write(Paths.get("img_"+counter+".jpg"), design);
-			
+
+			counter = counter + 1;
+			Path file = Files.write(Paths.get("img_" + counter + ".jpg"), design);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return new ResponseEntity<>("File Uploaded Successfully", HttpStatus.OK);
+	}
+
+	@DeleteMapping("/deleteChracter")
+	public ResponseEntity<Object> deleteChacter(@RequestBody CharacterBean characterBean) {
+		System.out.println("inside createImage..........");
+		characterService.delete(characterBean);
+
 		return new ResponseEntity<>("File Uploaded Successfully", HttpStatus.OK);
 	}
 }

@@ -35,4 +35,9 @@ public CharacterBean addCharacter(CharacterBean characterBean){
 		return CharacterServiceImpl.addCharacter(characterBean);
 		
 	}
+
+public CharacterBean delete(CharacterBean characterBean) {
+	return CharacterServiceImpl.deleteCharacter(characterBean);
+	
+}
 }

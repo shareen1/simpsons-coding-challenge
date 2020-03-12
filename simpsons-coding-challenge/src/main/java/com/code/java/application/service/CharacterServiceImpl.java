@@ -18,7 +18,7 @@ public class CharacterServiceImpl {
 	}
 
 	public static Set<CharacterBean> findAllCharacter() {
-		
+		MyCache.getInstance().setAllChar();
 		return MyCache.getInstance().getChlist();
 	}
 
@@ -27,5 +27,9 @@ public class CharacterServiceImpl {
 		 MyCache.getInstance().addToList(characterBean.getChId(), characterBean);
 		return characterBean;
 	}
-
+	public static CharacterBean deleteCharacter(CharacterBean characterBean) {
+		
+		 MyCache.getInstance().deleteCharacter(characterBean.getChId());
+		return characterBean;
+	}
 }

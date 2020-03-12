@@ -6,6 +6,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 
 import com.code.java.application.bean.CharacterBean;
+import com.code.java.application.bean.MyCache;
 import com.code.java.application.json.JsonRW;
 
 @SpringBootApplication
@@ -16,9 +17,11 @@ public class SimpsonsCodingChallengeApplication {
 		@SuppressWarnings("resource")
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 		context.register(CharacterBean.class);
+		context.register(MyCache.class);
 		context.refresh();
 		JsonRW.loadChacheOnStart();
 		SpringApplication.run(SimpsonsCodingChallengeApplication.class, args);
+		context.close();
 	}
 
 }
