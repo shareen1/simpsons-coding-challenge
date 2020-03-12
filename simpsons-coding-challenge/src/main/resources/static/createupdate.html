@@ -10,6 +10,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="createch.js"></script>
+<script src="imageUpload.js"></script>
 </head>
 <body style="align-content: right">
 	<p></p>
@@ -17,12 +18,31 @@
 		<tr>
 			<td>
 				<div class="container">
-					<h2>Create New Character</h2>
-<div id="postResultDiv" align="center"></div>
-				 <form id="id_form">
+					<h2 align="center">Create New Character</h2>
+					<br />
+					<div id="postResultDiv" align="center"></div>
+					<form id="ImageUpload">
+						<div class="input-group">
+
+							<div class="custom-file">
+								<label class="custom-file-label" for="inputGroupFile01">Select
+									Profile Picture</label> <input type="file" class="custom-file-input"
+									id="image" aria-describedby="inputGroupFileAddon01"
+									name="image"
+									placeholder="Please Select your profile picture here">
+
+							</div>
+							<br />
+							<button type="submit" class="btn btn-primary" name="upload">Upload
+								Image First</button>
+								<div id="resultData"></div>
+						</div>
+					</form>
+					<br />
+					<form id="id_form">
 						<div class="form-group">
-							<label for="fristname">Frist Name:</label> <input
-								type="text" class="form-control" id="firstName"
+							<label for="fristname">Frist Name:</label> <input type="text"
+								class="form-control" id="firstName"
 								placeholder="Enter fristname" name="firstName" width="50">
 						</div>
 						<div class="form-group">
@@ -39,30 +59,18 @@
 								class="form-control" id="chId"
 								placeholder="Enter Character Identification Number" name="chId">
 						</div>
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-							</div>
-							<div class="custom-file">
-								<input type="file" class="custom-file-input"
-									id="pictureURL" aria-describedby="inputGroupFileAddon01"
-									name="pictureURL"
-									placeholder="Please Select your profile picture here">
-								<label class="custom-file-label" for="inputGroupFile01">Choose
-									file</label>
-							</div>
-						</div>
+
 						<div class="form-group">
 							<label for="comment">Comment:</label>
 							<textarea class="form-control" rows="5" id="comments"
-								name=comments
+								name="comments"
 								placeholder="Please Enter your Comment Seperated By ,"></textarea>
 						</div>
 
 
 						<button type="submit" class="btn btn-primary" name="2">Save</button>
 						&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-						<button type="submit" class="btn btn-default" name="21">Cancel</button>
+						<button type="reset" class="btn btn-default" name="21">Cancel</button>
 					</form>
 				</div>
 

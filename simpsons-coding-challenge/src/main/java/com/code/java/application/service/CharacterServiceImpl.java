@@ -23,10 +23,8 @@ public class CharacterServiceImpl {
 	}
 
 	public static CharacterBean addCharacter(CharacterBean characterBean) {
-		SecureRandom random = new SecureRandom();
-		String randomId = new BigInteger(130, random).toString(32);
-		characterBean.setChId(randomId);
-		 MyCache.getInstance().addToList(randomId, characterBean);
+	
+		 MyCache.getInstance().addToList(characterBean.getChId(), characterBean);
 		return characterBean;
 	}
 

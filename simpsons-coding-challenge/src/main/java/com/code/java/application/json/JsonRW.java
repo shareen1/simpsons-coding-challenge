@@ -1,8 +1,14 @@
 package com.code.java.application.json;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -85,7 +91,7 @@ public class JsonRW {
 		characterbean.setPictureURL(pictureURL);
 		Long age = (Long) ch.get("age");
 		characterbean.setAge(age);
-		 MyCache.getInstance().addToList(id, characterbean);
+		MyCache.getInstance().addToList(id, characterbean);
 		context.close();
 	}
 
@@ -102,5 +108,43 @@ public class JsonRW {
 		if (characterId.equals(character)) {
 			comentlist.add(phrase);
 		}
+	}
+
+	public static String copyImageFile(String fromFile, String toFile) throws IOException {
+		InputStream is = null;
+		OutputStream os = null;
+		String path = "src/main/resources/static";
+
+		File file = new File(path);
+		String absolutePath = file.getAbsolutePath() + "\\";
+		copyFile(new File(fromFile),new File(absolutePath + toFile));
+		return absolutePath;
+
+	}
+
+	public static void copyFile(File sourceFile, File destFile) throws IOException {
+		if (!destFile.exists()) {
+			destFile.createNewFile();
+		}
+
+		FileChannel origin = null;
+		FileChannel destination = null;
+		try {
+			origin = new FileInputStream(sourceFile).getChannel();
+			destination = new FileOutputStream(destFile).getChannel();
+
+			long count = 0;
+			long size = origin.size();
+			while ((count += destination.transferFrom(origin, count, size - count)) < size)
+				;
+		} finally {
+			if (origin != null) {
+				origin.close();
+			}
+			if (destination != null) {
+				destination.close();
+			}
+		}
+
 	}
 }

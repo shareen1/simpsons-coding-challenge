@@ -7,8 +7,8 @@ function ajaxPost(){
 	var formData = {
 			chId : $("#chId").val(),
 			 firstName : $("#firstName").val(),
-			 pictureURL : $("#pictureURL").val(),
 			 lastName : $("#lastName").val(),
+			 comments : [$("#comments").val()],
 			 age : $("#age").val()
 			}
     $.ajax({
@@ -29,7 +29,7 @@ function ajaxPost(){
         },
             	 	error :function(e){
             	 		alert("Error")
-            	 		 console.log("Error",e.message);
+            	 		 console.log("Error",e);
             	 		}          
 
     });

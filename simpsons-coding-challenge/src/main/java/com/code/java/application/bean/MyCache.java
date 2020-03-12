@@ -1,5 +1,7 @@
 package com.code.java.application.bean;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,42 +9,64 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.code.java.application.json.JsonRW;
+
 public class MyCache {
-	private static MyCache myCache = null; 
-	  	public HashMap<String, CharacterBean> getCharacterList() {
+	private static MyCache myCache = null;
+
+	public HashMap<String, CharacterBean> getCharacterList() {
 		return characterList;
 	}
+
 	public void setCharacterList(HashMap<String, CharacterBean> characterList) {
 		this.characterList = characterList;
 	}
+
 	public Set<CharacterBean> getChlist() {
 		return chlist;
 	}
+
 	public void setChlist(Set<CharacterBean> chlist) {
 		this.chlist = chlist;
 	}
-		public static MyCache getInstance() 
-    { 
-        if (myCache == null) 
-        	myCache = new MyCache(); 
-  
-        return myCache; 
-    } 
+
+	public static MyCache getInstance() {
+		if (myCache == null)
+			myCache = new MyCache();
+
+		return myCache;
+	}
+
 	public HashMap<String, CharacterBean> characterList = new HashMap<>();
 	public Set<CharacterBean> chlist = new HashSet<CharacterBean>();
 
-	public  void addToList(String string, CharacterBean bean) {
+	public void addToList(String string, CharacterBean bean) {
+		
+		if (null == bean.getPictureURL()) {
+			String path = "src/main/resources/static";
 
+			File file = new File(path);
+			String absolutePath = file.getAbsolutePath() + "\\";
+			bean.setPictureURL("http://localhost:8083/" + bean.getChId() + ".jpg");
+			try {
+				JsonRW.copyImageFile(bean.getChId() + ".jpg", bean.getChId() + ".jpg");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		characterList.put(string, bean);
+		
+		
 		setAllChar();
 	}
+
 	public Set<CharacterBean> setAllChar() {
-		
+
 		for (Entry<String, CharacterBean> chbean : MyCache.getInstance().characterList.entrySet()) {
 			CharacterBean myVal = chbean.getValue();
 			chlist.add(myVal);
 		}
-		
+
 		return chlist;
 	}
 
@@ -56,7 +80,7 @@ public class MyCache {
 
 	}
 
-	public  CharacterBean getBeanById(String id) {
+	public CharacterBean getBeanById(String id) {
 		return characterList.get(id);
 
 	}
