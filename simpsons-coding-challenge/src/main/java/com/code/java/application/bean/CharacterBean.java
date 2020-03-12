@@ -12,6 +12,15 @@ public class CharacterBean  implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private int counter;
+	public int getCounter() {
+		return counter;
+	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
+	}
+
 	private String chId;
 	private String firstName;
 	private String lastName;

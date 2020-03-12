@@ -43,21 +43,21 @@
 						<div class="form-group">
 							<label for="fristname">Frist Name:</label> <input type="text"
 								class="form-control" id="firstName"
-								placeholder="Enter fristname" name="firstName" width="50">
+								placeholder="Please enter your fristname" name="firstName" width="50" required>
 						</div>
 						<div class="form-group">
 							<label for="lastname">Last Name:</label> <input type="text"
-								class="form-control" id="lastName" placeholder="Enter lastname"
-								name="lastName" width="50">
+								class="form-control" id="lastName" placeholder="Please enter your lastname"
+								name="lastName" width="50" required>
 						</div>
 						<div class="form-group">
-							<label for="age">Age:</label> <input type="text"
-								class="form-control" id="age" placeholder="Enter Age" name="age">
+							<label for="age">Age:</label> <input type="number"
+								class="form-control" id="age" placeholder="Please enter your Age" name="age" min="0" step="1" data-bind="value:replyNumber" required >
 						</div>
 						<div class="form-group">
 							<label for="charId">Character Id:</label> <input type="text"
 								class="form-control" id="chId"
-								placeholder="Enter Character Identification Number" name="chId">
+								placeholder="Please enter your Character Identification Number Or leave it Empty if you dont have" name="chId">
 						</div>
 
 						<div class="form-group">

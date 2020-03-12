@@ -35,7 +35,7 @@ public class SimpsonsCodingChallengeController {
 	@Autowired
 	CharacterService characterService;
 
-	private boolean flag;
+	private int counter=0;
 	
 	 static String randomId;
 
@@ -55,10 +55,11 @@ public class SimpsonsCodingChallengeController {
 	@PostMapping("/postCharacter")
 	public ResponseEntity<Object> postCharacter(@RequestBody CharacterBean characterBean) {
 		System.out.println("Customer information saved successfully ::." + characterBean.getFirstName());
-		
-		if(null==characterBean.getChId() || flag==true ) {
+		characterBean.setCounter(counter);
+		SecureRandom random = new SecureRandom();
+		 randomId = new BigInteger(130, random).toString(32);
+		if(null==characterBean.getChId() ) {
 			characterBean.setChId(randomId);
-			flag=false;
 			
 		}
 		CharacterBean savedCBean = characterService.addCharacter(characterBean);
@@ -72,21 +73,19 @@ public class SimpsonsCodingChallengeController {
 
 	@RequestMapping(value = "/imageUpload", method = RequestMethod.POST)
 	public ResponseEntity<Object> createImage(@RequestParam("image") MultipartFile image) {
-		SecureRandom random = new SecureRandom();
-		 randomId = new BigInteger(130, random).toString(32);
-		 flag=true;
+
 		System.out.println("inside createImage..........");
 		byte[] design =null ;
 		try {
 			design = image.getBytes();
-
-			Path file = Files.write(Paths.get(randomId+".jpg"), design);
+           
+			counter=counter+1;
+			Path file = Files.write(Paths.get("img_"+counter+".jpg"), design);
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		//ServiceResponse<File> svcs = new ServiceResponse<>("success", new File(file));
 		return new ResponseEntity<>("File Uploaded Successfully", HttpStatus.OK);
 	}
 }

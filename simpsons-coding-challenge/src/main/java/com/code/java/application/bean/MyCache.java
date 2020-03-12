@@ -2,10 +2,8 @@ package com.code.java.application.bean;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -47,9 +45,9 @@ public class MyCache {
 
 			File file = new File(path);
 			String absolutePath = file.getAbsolutePath() + "\\";
-			bean.setPictureURL("http://localhost:8083/" + bean.getChId() + ".jpg");
+			bean.setPictureURL("http://localhost:8083/" + "img_"+bean.getCounter() + ".jpg");
 			try {
-				JsonRW.copyImageFile(bean.getChId() + ".jpg", bean.getChId() + ".jpg");
+				JsonRW.copyImageFile("img_"+bean.getCounter() + ".jpg", "img_"+bean.getCounter() + ".jpg");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
