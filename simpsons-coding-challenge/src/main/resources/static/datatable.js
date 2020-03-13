@@ -13,6 +13,7 @@ $(document)
 												},
 												{
 													"mData" : "pictureURL",
+													"width" : "50px",
 													"render" : function(mData,
 															type, row) {
 														return '<img src="'
@@ -21,23 +22,27 @@ $(document)
 													}
 												},
 												{
-													"mData" : "firstName"
+													"mData" : "firstName",
+													"width" : "200px"
 												},
 												{
-													"mData" : "lastName"
+													"mData" : "lastName",
+													"width" : "200px"
 												},
 												{
-													"mData" : "age"
+													"mData" : "age",
+													"width" : "50px"
 												},
 												{
 													"mData" : "comments",
-													"width" : "350px"
+													"width" : "550px"
 												},
 												{
 													"mData" : null,
 													"bSortable" : false,
+													"width" : "150px",
 													"mRender" : function(o) {
-														return '<button type="button" class="btn btn-primary" id="edit">&nbsp;Edit&nbsp;&nbsp;&nbsp;</button>&nbsp;<button type="button" class="btn btn-danger" id="delete">Delete</button>';
+														return '<p align="leftt"><button type="button" class="btn" id="edit" title="Edit"><i class="fa fa-edit"></i>&nbsp;</button>&nbsp;<button type="button" class="btn" id="delete" title="Delete"><i class="fa fa-trash"></i></button><p/>';
 													}
 												} ]
 									});
@@ -83,7 +88,7 @@ $(document)
 													.parents("tr")
 													.find("td:eq(5)")
 													.prepend(
-															"<button class='btn btn-info' id='update'>Update</button>&nbsp;<button class='btn btn-warning' id='cancel'>Cancel</button>")
+															"<button class='btn' id='update' title='Update'><i class='glyphicon glyphicon-ok'></i></button>&nbsp;<button class='btn' id='cancel' title='Cancel'><i class='fa fa-close'></i></button>")
 											$(this).hide();
 
 										} else if (this.id == "delete") {
@@ -161,6 +166,11 @@ $(document)
 															if (result.status == "success") {
 																window.location
 																		.replace("http://localhost:8083");
+																sleep(1000);
+																$(
+																"#test")
+																.html(
+																		"<strong>The information was successfully updated.</strong>");
 															} else {
 																$(
 																		"#postResultDiv")

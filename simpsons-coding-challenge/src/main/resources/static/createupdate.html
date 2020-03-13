@@ -13,12 +13,14 @@
 <script src="imageUpload.js"></script>
 </head>
 <body style="align-content: right">
-	<p></p>
 	<table style="align-items: center; width: 100%;">
 		<tr>
 			<td>
 				<div class="container">
-					<h2 align="center">Create New Character</h2>
+
+				<div class="page-header">
+					<h3 align="center" >Create New Character</h3>
+					</div>
 					<br />
 					<div id="postResultDiv" align="center"></div>
 					<form id="ImageUpload">
@@ -29,11 +31,11 @@
 									Profile Picture</label> <input type="file" class="custom-file-input"
 									id="image" aria-describedby="inputGroupFileAddon01"
 									name="image"
-									placeholder="Please Select your profile picture here">
+									placeholder="Please Select your profile picture here" required>
 
 							</div>
 							<br />
-							<button type="submit" class="btn btn-primary" name="upload">Upload
+							<button type="submit" class="btn btn-primary" name="upload"><i class="glyphicon glyphicon-upload"></i>&nbsp;Upload
 								Image First</button>
 								<div id="resultData"></div>
 						</div>
@@ -43,7 +45,7 @@
 						<div class="form-group">
 							<label for="fristname">First Name:</label> <input type="text"
 								class="form-control" id="firstName"
-								placeholder="Please enter your firstname" name="firstName" width="50" required>
+								placeholder="Please enter your firstname" name="firstName" width="32"  required>
 						</div>
 						<div class="form-group">
 							<label for="lastname">Last Name:</label> <input type="text"
@@ -52,7 +54,7 @@
 						</div>
 						<div class="form-group">
 							<label for="age">Age:</label> <input type="number"
-								class="form-control" id="age" placeholder="Please enter your Age" name="age" min="0" step="1" data-bind="value:replyNumber" required >
+								class="form-control" id="age" placeholder="Please enter your Age" name="age" min="0" step="1"  max="120" data-bind="value:replyNumber" required >
 						</div>
 
 
@@ -64,9 +66,9 @@
 						</div>
 
 
-						<button type="submit" class="btn btn-primary" name="2">Save</button>
-						&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-						<a href="/" class="btn btn-info" role="button">Back</a>	
+						<button type="submit" class="btn btn-primary" name="2" ><i class="glyphicon glyphicon-floppy-save"></i>&nbsp;Save</button>
+						&nbsp;&nbsp; 
+						<a href="/" class="btn btn-default" role="button"><i class="glyphicon glyphicon-step-backward"></i>&nbsp;Back</a>	
 					</form>
 				</div>
 

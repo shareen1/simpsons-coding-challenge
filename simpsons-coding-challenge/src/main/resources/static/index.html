@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 	<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 	<script src="datatable.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script type="text/javascript">
 	function clickFunction() {
 		window.location.replace('http://localhost:8083/createupdate.html');
@@ -18,9 +19,16 @@
 </head>
 
 <body>
-	<h1>Character List</h1>
-	<div id="postResultDiv" align="center"></div>
-	<p align="right"><button  type="button" class="btn btn-primary" onclick="clickFunction()">Create New Character </button></p>
+<div class="container">
+<div class="page-header">
+  <h2>Character List</h2>
+</div>
+
+	<!-- <div class="alert alert-success" id="test">
+	</div> -->
+
+	
+	<p align="right"><button  type="button" class="btn " onclick="clickFunction()"><i class="glyphicon glyphicon-plus" ></i>Create New Character </button></p>
 	
 	<table id="personTable" class="display table table-striped table-bordered table-hover dataTable no-footer" cellspacing="0" width="100%">
     <thead>
@@ -35,6 +43,6 @@
             </tr>
         </thead>
     </table>
-    
+    </div>
 </body>
 </html>
