@@ -78,6 +78,8 @@ class SimpsonsCodingChallengeApplicationTests {
 		String resultContent = result.getResponse().getContentAsString();
 		ServiceResponse rs = ob.readValue(resultContent, ServiceResponse.class);
 		Assert.assertTrue("success".equals(rs.getStatus()));
+		
+		
 
 	}
 }
