@@ -9,12 +9,13 @@ import java.util.Set;
 import org.springframework.context.annotation.Configuration;
 
 import com.code.java.application.json.JsonRW;
+
 @Configuration
 public class MyCache {
+	
 	public HashMap<String, CharacterBean> characterList = new HashMap<>();
 	public Set<CharacterBean> chlist = new HashSet<CharacterBean>();
 
-	
 	public HashMap<String, CharacterBean> getCharacterList() {
 		return characterList;
 	}
@@ -31,35 +32,35 @@ public class MyCache {
 		this.chlist = chlist;
 	}
 
+	public HashMap<String, CharacterBean> addToList(String string, CharacterBean bean, boolean isappstart,
+			HashMap<String, CharacterBean> mylist) {
 
-	public HashMap<String, CharacterBean> addToList(String string, CharacterBean bean, boolean isappstart, HashMap<String, CharacterBean> mylist) {
-		
 		if (null == bean.getPictureURL()) {
-			bean.setPictureURL("http://localhost:8083/" + "img_"+bean.getCounter() + ".jpg");
+			bean.setPictureURL("http://localhost:8083/" + "img_" + bean.getCounter() + ".jpg");
 			try {
-				JsonRW.copyImageFile("img_"+bean.getCounter() + ".jpg", "img_"+bean.getCounter() + ".jpg");
+				JsonRW.copyImageFile("img_" + bean.getCounter() + ".jpg", "img_" + bean.getCounter() + ".jpg");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		characterList.put(string, bean);
-		//mylist.put(string, bean);
-		
+		// mylist.put(string, bean);
+
 		setAllChar(isappstart);
 		return characterList;
 	}
 
 	public Set<CharacterBean> setAllChar(boolean isAppstart) {
-		if(isAppstart!=true){
-		chlist = new HashSet<CharacterBean>();
+		if (isAppstart != true) {
+			chlist = new HashSet<CharacterBean>();
 		}
-		//setCharacterList(characterList);
+		// setCharacterList(characterList);
 		for (Entry<String, CharacterBean> chbean : characterList.entrySet()) {
 			CharacterBean myVal = chbean.getValue();
 			chlist.add(myVal);
 		}
 		System.out.println("size of chlist :" + chlist.size());
-		//setChlist(chlist);
+		// setChlist(chlist);
 		return chlist;
 	}
 

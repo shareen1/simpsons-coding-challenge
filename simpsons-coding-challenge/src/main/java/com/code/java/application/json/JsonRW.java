@@ -19,7 +19,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 
-import com.code.java.application.SimpsonsCodingChallengeApplication;
 import com.code.java.application.bean.CharacterBean;
 import com.code.java.application.bean.MyCache;
 

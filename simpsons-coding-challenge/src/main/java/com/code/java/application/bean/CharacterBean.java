@@ -11,7 +11,10 @@ public class CharacterBean  implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+    public CharacterBean() {
+    	
+    	     super();
+    }
 	private int counter;
 	public int getCounter() {
 		return counter;
