@@ -72,12 +72,12 @@ class SimpsonsCodingChallengeApplicationTests {
 		String mymap=	"{\"chId\": \"l\", \"firstName\": \"m\", \"lastName\": \"m\", \"comments\": [\"9\"], \"age\": \"8\"}";
 		
 		//String jsonRequest = ob.writeValueAsString(characterBean);
-		/*MvcResult result = mockMvc
+		MvcResult result = mockMvc
 				.perform(post("/postCharacter").content(mymap).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn();
 		String resultContent = result.getResponse().getContentAsString();
-		ServiceResponse rs = ob.readValue(resultContent, ServiceResponse.class);*/
-		Assert.assertTrue("success".equals("success"));
+		ServiceResponse rs = ob.readValue(resultContent, ServiceResponse.class);
+		Assert.assertTrue("success".equals(rs.getStatus()));
 
 	}
 }
