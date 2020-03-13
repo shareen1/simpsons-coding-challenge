@@ -36,7 +36,8 @@ $(document).ready(
 
 				});
 			}
-			$('#cancel').on('click', 'button', function(event) {
+			$('#cancelbutton').on('click', 'button', function(event) {
+				event.preventDefault();
 				window.location.replace("http://localhost:8083");
 			});
 

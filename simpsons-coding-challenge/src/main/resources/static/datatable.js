@@ -54,7 +54,7 @@ $(document)
 										// '+data["firstName"] +'ChId
 										// :'+data["chId"]+this.id );
 										if (this.id == "edit") {
-											alert('you are in edit');
+											alert('Are you sure you want to edit?');
 
 											var firstName = data["firstName"];
 											var lastName = data["lastName"];
@@ -87,7 +87,7 @@ $(document)
 											$(this).hide();
 
 										} else if (this.id == "delete") {
-											alert('you are in delete');
+											alert('Are you sure you want to delete?');
 
 											var formData = {
 												firstName : data["firstName"],
@@ -176,14 +176,12 @@ $(document)
 
 													});
 
+										}else if(this.id == "cancel"){
+											window.location
+											.replace("http://localhost:8083");
 										}
 										// window.location.replace("http://localhost:8083/createupdate.html?id="+data.id+"&firstName="+data.firstName+"&lastName="+data.lastName+"&pictureURL="+data.pictureURL+"&age="+data.age);
 
 									});
-					$(document).on(
-							'click',
-							'span.editrow',
-							function() {
-								alert('edit');
-							});
+					
 				});

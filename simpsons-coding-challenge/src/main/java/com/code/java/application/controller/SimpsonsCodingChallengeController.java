@@ -72,10 +72,10 @@ public class SimpsonsCodingChallengeController {
 		characterBean.setCounter(counter);
 		SecureRandom random = new SecureRandom();
 		randomId = new BigInteger(130, random).toString(32);
-		if (null == characterBean.getChId()) {
+		//if (null == characterBean.getChId()) {
 			characterBean.setChId(randomId);
 
-		}
+		//}
 		CharacterBean savedCBean = characterService.addCharacter(characterBean,getMycahe());
 		ServiceResponse<CharacterBean> svcs = new ServiceResponse<>("success", savedCBean);
 
