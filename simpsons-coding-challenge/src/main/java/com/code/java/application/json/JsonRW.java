@@ -6,9 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.channels.FileChannel;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,16 +16,23 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Controller;
 
+import com.code.java.application.SimpsonsCodingChallengeApplication;
 import com.code.java.application.bean.CharacterBean;
 import com.code.java.application.bean.MyCache;
 
-@Component
+@ComponentScan(basePackageClasses = {CharacterBean.class,MyCache.class})
+@ComponentScan ({"com.code.java.application.bean", "com.code.java.application.service","com.code.java.application","com.code.java.application.controller","com.code.java.application.json"})
+@Controller
 public class JsonRW {
 
-	public static void loadChacheOnStart() {
-		readCharacter();
+		private HashMap<String, CharacterBean> mylist= new HashMap<>();;
+
+		public void loadChacheOnStart(MyCache mcache, CharacterBean chbean) {
+		readCharacter(mcache);
+	
 		System.out.print("cache loaded");
 	}
 
@@ -50,12 +56,28 @@ public class JsonRW {
 		return jsonList;
 	}
 
-	public static void readCharacter() {
+	public  void readCharacter(MyCache mcache) {
 
 		String filename = "src/main/resources/data/characters.json";
 		// Iterate over employee array
 		JSONArray characterList = readJsonFile(filename);
-		characterList.forEach(ch -> parseCharacterObject((JSONObject) ch));
+		for(int i=0;i<characterList.size();i++) {
+			
+			JSONObject myObject = (JSONObject)characterList.get(i);
+			AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+			context.register(CharacterBean.class);
+			context.refresh();
+			CharacterBean chbean = context.getBean(CharacterBean.class);
+			parseCharacterObject( myObject,mcache,chbean );
+			context.close();
+		}
+		
+		/*for (Object object : characterList) {
+			JSONObject jsonobject=(JSONObject) object;
+			
+			mylist=parseCharacterObject( jsonobject,mcache, );
+		}*/
+		
 
 	}
 
@@ -66,33 +88,39 @@ public class JsonRW {
 		return characterList;
 	}
 
-	private static void parseCharacterObject(JSONObject ch) {
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-		context.register(CharacterBean.class);
-		context.refresh();
-		CharacterBean characterbean = (CharacterBean) context.getBean(CharacterBean.class);
-
-		// Get character object within list
+	private  HashMap<String, CharacterBean> parseCharacterObject(JSONObject ch, MyCache mych, CharacterBean characterBean) {
+		
+		//MyCache mycahe = myCacheService.getMycahe();
+		//AnnotationConfigApplicationContext context = myCacheService.getContext();
+		//context.register(CharacterBean.class);
+		//context.register(MyCache.class);
+		//context.refresh();
+		//CharacterBean characterbean = (CharacterBean) myCacheService.getChBean();
+		//MyCache myCache = (MyCache) context.getBean(MyCache.class);
+		// Get character object within mylist
+		
 		String id = (String) ch.get("_id");
-		characterbean.setChId(id);
-		Set<String> comments = parseComment(characterbean, id);
-		characterbean.setComments(comments, id);
-		characterbean.setComments(comments, id);
+		characterBean.setChId(id);
+		Set<String> comments = parseComment(characterBean, id);
+		characterBean.setComments(comments, id);
+		characterBean.setComments(comments, id);
 		// Get character first name
 		String firstName = (String) ch.get("firstName");
-		characterbean.setFirstName(firstName);
+		characterBean.setFirstName(firstName);
 
 		// Get character last name
 		String lastName = (String) ch.get("lastName");
-		characterbean.setLastName(lastName);
+		characterBean.setLastName(lastName);
 
 		// Get employee picture URL name
 		String pictureURL = (String) ch.get("picture");
-		characterbean.setPictureURL(pictureURL);
+		characterBean.setPictureURL(pictureURL);
 		Long age = (Long) ch.get("age");
-		characterbean.setAge(age);
-		MyCache.getInstance().addToList(id, characterbean);
-		context.close();
+		characterBean.setAge(age);
+		
+		return mych.addToList(id, characterBean,true,null);
+		
+		
 	}
 
 	private static Set<String> parseComment(CharacterBean characterbean, String id) {
@@ -111,8 +139,6 @@ public class JsonRW {
 	}
 
 	public static String copyImageFile(String fromFile, String toFile) throws IOException {
-		InputStream is = null;
-		OutputStream os = null;
 		String path = "src/main/resources/static";
 
 		File file = new File(path);
@@ -132,11 +158,9 @@ public class JsonRW {
 		try {
 			origin = new FileInputStream(sourceFile).getChannel();
 			destination = new FileOutputStream(destFile).getChannel();
-
 			long count = 0;
 			long size = origin.size();
-			while ((count += destination.transferFrom(origin, count, size - count)) < size)
-				;
+			while ((count += destination.transferFrom(origin, count, size - count)) < size);
 		} finally {
 			if (origin != null) {
 				origin.close();

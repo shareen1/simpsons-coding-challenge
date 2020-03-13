@@ -1,10 +1,6 @@
 package com.code.java.application.service;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
+import java.util.HashMap;
 import java.util.Set;
 
 import com.code.java.application.bean.CharacterBean;
@@ -12,24 +8,27 @@ import com.code.java.application.bean.MyCache;
 
 public class CharacterServiceImpl {
 
-	public static CharacterBean getCharacterById(String id) {
-		CharacterBean ch = MyCache.getInstance().getBeanById(id);
+	private static HashMap<String, CharacterBean> myList= new HashMap<>();;
+
+	public static CharacterBean getCharacterById(String id, MyCache mycahe) {
+
+		CharacterBean ch = mycahe.getBeanById(id);
 		return ch;
 	}
 
-	public static Set<CharacterBean> findAllCharacter() {
-		MyCache.getInstance().setAllChar();
-		return MyCache.getInstance().getChlist();
+	public static Set<CharacterBean> findAllCharacter(MyCache mycahe) {
+		mycahe.setAllChar(false);
+		return mycahe.getChlist();
 	}
 
-	public static CharacterBean addCharacter(CharacterBean characterBean) {
-	
-		 MyCache.getInstance().addToList(characterBean.getChId(), characterBean);
+	public static CharacterBean addCharacter(CharacterBean characterBean, MyCache mycahe) {
+
+		mycahe.addToList(characterBean.getChId(), characterBean,false,myList);
 		return characterBean;
 	}
-	public static CharacterBean deleteCharacter(CharacterBean characterBean) {
-		
-		 MyCache.getInstance().deleteCharacter(characterBean.getChId());
+
+	/*public static CharacterBean deleteCharacter(CharacterBean characterBean) {
+		deleteCharacter(characterBean.getChId());
 		return characterBean;
-	}
+	}*/
 }

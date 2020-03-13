@@ -2,20 +2,17 @@ package com.code.java.application.controller;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.net.URI;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
-import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.code.java.application.SimpsonsCodingChallengeApplication;
 import com.code.java.application.bean.CharacterBean;
+import com.code.java.application.bean.MyCache;
 import com.code.java.application.service.CharacterService;
 import com.code.java.application.service.ServiceResponse;
 
-@ComponentScan(basePackageClasses = CharacterBean.class)
+@ComponentScan(basePackageClasses = {CharacterBean.class,MyCache.class})
 @RestController
 
 public class SimpsonsCodingChallengeController {
@@ -37,20 +35,33 @@ public class SimpsonsCodingChallengeController {
 	@Autowired
 	CharacterService characterService;
 
+	
 	private int counter = 0;
 
 	static String randomId;
+	private AnnotationConfigApplicationContext getContext() {
+		return SimpsonsCodingChallengeApplication.context;
 
+	}
+	private MyCache getMycahe() {
+		AnnotationConfigApplicationContext context = getContext();
+		return context.getBean(MyCache.class);
+		
+	}
+	
 	@RequestMapping(value = "/character", method = RequestMethod.GET, produces = { "application/json" })
 	public CharacterBean findCharacterById(@RequestParam("id") String personId) {
 		System.out.println("Searching by ID  : " + personId);
-		return characterService.getCharacterById(personId);
+		return characterService.getCharacterById(personId,getMycahe());
 	}
 
 	@RequestMapping(value = "/characterlist", method = RequestMethod.GET, produces = { "application/json" })
 	public Set<CharacterBean> findAllCharacter() {
-		System.out.println("Searching all List ");
-		return characterService.findAllCharacter();
+		System.out.println("Searching all List " + getMycahe().getChlist().size());
+		
+		// Set<CharacterBean> characters = characterService.findAllCharacter( getMycahe());
+		return getMycahe().getChlist();
+		 
 
 	}
 
@@ -64,10 +75,7 @@ public class SimpsonsCodingChallengeController {
 			characterBean.setChId(randomId);
 
 		}
-		CharacterBean savedCBean = characterService.addCharacter(characterBean);
-
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(savedCBean.getChId()).toUri();
+		CharacterBean savedCBean = characterService.addCharacter(characterBean,getMycahe());
 		ServiceResponse<CharacterBean> svcs = new ServiceResponse<>("success", savedCBean);
 
 		return new ResponseEntity<>(svcs, HttpStatus.OK);
@@ -82,7 +90,7 @@ public class SimpsonsCodingChallengeController {
 			design = image.getBytes();
 
 			counter = counter + 1;
-			Path file = Files.write(Paths.get("img_" + counter + ".jpg"), design);
+			Files.write(Paths.get("img_" + counter + ".jpg"), design);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -93,7 +101,7 @@ public class SimpsonsCodingChallengeController {
 	@DeleteMapping("/deleteChracter")
 	public ResponseEntity<Object> deleteChacter(@RequestBody CharacterBean characterBean) {
 		System.out.println("inside createImage..........");
-		characterService.delete(characterBean);
+		getMycahe().deleteCharacter(characterBean.getChId());
 
 		return new ResponseEntity<>("File Uploaded Successfully", HttpStatus.OK);
 	}

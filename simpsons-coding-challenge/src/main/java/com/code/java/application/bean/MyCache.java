@@ -1,20 +1,20 @@
 package com.code.java.application.bean;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Set;
 
 import com.code.java.application.json.JsonRW;
 @Configuration
 public class MyCache {
-	private static MyCache myCache = null;
+	public HashMap<String, CharacterBean> characterList = new HashMap<>();
+	public Set<CharacterBean> chlist = new HashSet<CharacterBean>();
 
+	
 	public HashMap<String, CharacterBean> getCharacterList() {
 		return characterList;
 	}
@@ -31,23 +31,10 @@ public class MyCache {
 		this.chlist = chlist;
 	}
 
-	public static MyCache getInstance() {
-		if (myCache == null)
-			myCache = new MyCache();
 
-		return myCache;
-	}
-
-	public HashMap<String, CharacterBean> characterList = new HashMap<>();
-	public Set<CharacterBean> chlist = null;
-
-	public void addToList(String string, CharacterBean bean) {
+	public HashMap<String, CharacterBean> addToList(String string, CharacterBean bean, boolean isappstart, HashMap<String, CharacterBean> mylist) {
 		
 		if (null == bean.getPictureURL()) {
-			String path = "src/main/resources/static";
-
-			File file = new File(path);
-			String absolutePath = file.getAbsolutePath() + "\\";
 			bean.setPictureURL("http://localhost:8083/" + "img_"+bean.getCounter() + ".jpg");
 			try {
 				JsonRW.copyImageFile("img_"+bean.getCounter() + ".jpg", "img_"+bean.getCounter() + ".jpg");
@@ -56,32 +43,35 @@ public class MyCache {
 			}
 		}
 		characterList.put(string, bean);
+		//mylist.put(string, bean);
 		
-		
-		setAllChar();
+		setAllChar(isappstart);
+		return characterList;
 	}
 
-	public Set<CharacterBean> setAllChar() {
+	public Set<CharacterBean> setAllChar(boolean isAppstart) {
+		if(isAppstart!=true){
 		chlist = new HashSet<CharacterBean>();
-		setCharacterList(characterList);
-		for (Entry<String, CharacterBean> chbean : MyCache.getInstance().characterList.entrySet()) {
+		}
+		//setCharacterList(characterList);
+		for (Entry<String, CharacterBean> chbean : characterList.entrySet()) {
 			CharacterBean myVal = chbean.getValue();
 			chlist.add(myVal);
 		}
 		System.out.println("size of chlist :" + chlist.size());
-		setChlist(chlist);
+		//setChlist(chlist);
 		return chlist;
 	}
 
-	public void deleteCharacter(String id) {
+	public Set<CharacterBean> deleteCharacter(String id) {
 		characterList.remove(id);
-		setAllChar();
-		
+		setAllChar(false);
+		return getChlist();
 	}
 
 	public void updateCharacter(String id, CharacterBean bean) {
 		characterList.put(id, bean);
-		setAllChar();
+		//setAllChar();
 
 	}
 
