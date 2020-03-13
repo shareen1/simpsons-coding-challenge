@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -100,9 +101,18 @@ public class SimpsonsCodingChallengeController {
 
 	@DeleteMapping("/deleteChracter")
 	public ResponseEntity<Object> deleteChacter(@RequestBody CharacterBean characterBean) {
-		System.out.println("inside createImage..........");
+		System.out.println("inside deleteChacter..........");
 		getMycahe().deleteCharacter(characterBean.getChId());
 
 		return new ResponseEntity<>("File Uploaded Successfully", HttpStatus.OK);
+	}
+	@PutMapping("/putChracter")
+	public ResponseEntity<Object> putChracter(@RequestBody CharacterBean characterBean) {
+		System.out.println("inside putChracter..........");
+	    getMycahe().updateCharacter(characterBean.getChId(), characterBean);
+		ServiceResponse<CharacterBean> svcs = new ServiceResponse<>("success", characterBean);
+
+		return new ResponseEntity<>(svcs, HttpStatus.OK);
+
 	}
 }

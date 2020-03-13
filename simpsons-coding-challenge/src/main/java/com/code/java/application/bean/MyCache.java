@@ -71,7 +71,7 @@ public class MyCache {
 
 	public void updateCharacter(String id, CharacterBean bean) {
 		characterList.put(id, bean);
-		//setAllChar();
+		setAllChar(false);
 
 	}
 
