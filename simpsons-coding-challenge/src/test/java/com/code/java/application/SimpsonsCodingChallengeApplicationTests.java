@@ -141,6 +141,7 @@ class SimpsonsCodingChallengeApplicationTests {
 		int resultstatus = resultRes.getStatus();
 		System.out.println(list.size());
 		assertEquals(HttpStatus.OK, HttpStatus.valueOf(resultstatus));
+		
 	}
 
 }
