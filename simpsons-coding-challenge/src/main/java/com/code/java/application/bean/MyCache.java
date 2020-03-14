@@ -34,11 +34,18 @@ public class MyCache {
 
 	public HashMap<String, CharacterBean> addToList(String string, CharacterBean bean, boolean isappstart,
 			HashMap<String, CharacterBean> mylist) {
+		int imageName;
+		if(bean.isImageUploaded()) 
+		{
+			 imageName = bean.getCounter();
+		}else {
+			imageName=0;
+		}
 
 		if (null == bean.getPictureURL()) {
-			bean.setPictureURL("http://localhost:8083/" + "img_" + bean.getCounter() + ".jpg");
+			bean.setPictureURL("http://localhost:8083/" + "img_" + imageName + ".jpg");
 			try {
-				JsonRW.copyImageFile("img_" + bean.getCounter() + ".jpg", "img_" + bean.getCounter() + ".jpg");
+				JsonRW.copyImageFile("img_" + imageName + ".jpg", "img_" + imageName+ ".jpg");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -47,6 +54,7 @@ public class MyCache {
 		// mylist.put(string, bean);
 
 		setAllChar(isappstart);
+		bean.setImageUploaded(false);
 		return characterList;
 	}
 
@@ -71,7 +79,14 @@ public class MyCache {
 	}
 
 	public void updateCharacter(String id, CharacterBean bean) {
+		Set<String> comentlist = bean.getComments();
+		Set<String> latestComment = new HashSet<>();
+		for (String mycomment : comentlist) {
+			latestComment.add(mycomment.replaceAll("\"", ""));
+		}
+		bean.setComments(latestComment, id);
 		characterList.put(id, bean);
+
 		setAllChar(false);
 
 	}

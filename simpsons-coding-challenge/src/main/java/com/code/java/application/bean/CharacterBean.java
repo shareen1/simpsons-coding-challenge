@@ -23,8 +23,15 @@ public class CharacterBean  implements Serializable{
 	public void setCounter(int counter) {
 		this.counter = counter;
 	}
-
+	private boolean isImageUploaded;
 	private String chId;
+	public boolean isImageUploaded() {
+		return isImageUploaded;
+	}
+
+	public void setImageUploaded(boolean isImageUploaded) {
+		this.isImageUploaded = isImageUploaded;
+	}
 	private String firstName;
 	private String lastName;
 	private String pictureURL;

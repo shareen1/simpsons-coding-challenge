@@ -28,7 +28,7 @@ import com.code.java.application.bean.MyCache;
 import com.code.java.application.service.CharacterService;
 import com.code.java.application.service.ServiceResponse;
 
-@ComponentScan(basePackageClasses = {CharacterBean.class,MyCache.class})
+@ComponentScan(basePackageClasses = { CharacterBean.class, MyCache.class })
 @RestController
 
 public class SimpsonsCodingChallengeController {
@@ -36,33 +36,35 @@ public class SimpsonsCodingChallengeController {
 	@Autowired
 	CharacterService characterService;
 
-	
 	private int counter = 0;
 
 	static String randomId;
+	boolean isimageUploaded = false;
+
 	private AnnotationConfigApplicationContext getContext() {
 		return SimpsonsCodingChallengeApplication.context;
 
 	}
+
 	private MyCache getMycahe() {
 		AnnotationConfigApplicationContext context = getContext();
 		return context.getBean(MyCache.class);
-		
+
 	}
-	
+
 	@RequestMapping(value = "/character", method = RequestMethod.GET, produces = { "application/json" })
 	public CharacterBean findCharacterById(@RequestParam("id") String personId) {
 		System.out.println("Searching by ID  : " + personId);
-		return characterService.getCharacterById(personId,getMycahe());
+		return characterService.getCharacterById(personId, getMycahe());
 	}
 
 	@RequestMapping(value = "/characterlist", method = RequestMethod.GET, produces = { "application/json" })
 	public Set<CharacterBean> findAllCharacter() {
 		System.out.println("Searching all List " + getMycahe().getChlist().size());
-		
-		// Set<CharacterBean> characters = characterService.findAllCharacter( getMycahe());
+
+		// Set<CharacterBean> characters = characterService.findAllCharacter(
+		// getMycahe());
 		return getMycahe().getChlist();
-		 
 
 	}
 
@@ -72,11 +74,12 @@ public class SimpsonsCodingChallengeController {
 		characterBean.setCounter(counter);
 		SecureRandom random = new SecureRandom();
 		randomId = new BigInteger(130, random).toString(32);
-		//if (null == characterBean.getChId()) {
-			characterBean.setChId(randomId);
-
-		//}
-		CharacterBean savedCBean = characterService.addCharacter(characterBean,getMycahe());
+		// if (null == characterBean.getChId()) {
+		characterBean.setChId(randomId);
+		characterBean.setImageUploaded(isimageUploaded);
+		isimageUploaded = false;
+		// }
+		CharacterBean savedCBean = characterService.addCharacter(characterBean, getMycahe());
 		ServiceResponse<CharacterBean> svcs = new ServiceResponse<>("success", savedCBean);
 
 		return new ResponseEntity<>(svcs, HttpStatus.OK);
@@ -89,7 +92,7 @@ public class SimpsonsCodingChallengeController {
 		byte[] design = null;
 		try {
 			design = image.getBytes();
-
+			isimageUploaded = true;
 			counter = counter + 1;
 			Files.write(Paths.get("img_" + counter + ".jpg"), design);
 
@@ -106,10 +109,11 @@ public class SimpsonsCodingChallengeController {
 
 		return new ResponseEntity<>("File Uploaded Successfully", HttpStatus.OK);
 	}
+
 	@PutMapping("/putChracter")
 	public ResponseEntity<Object> putChracter(@RequestBody CharacterBean characterBean) {
 		System.out.println("inside putChracter..........");
-	    getMycahe().updateCharacter(characterBean.getChId(), characterBean);
+		getMycahe().updateCharacter(characterBean.getChId(), characterBean);
 		ServiceResponse<CharacterBean> svcs = new ServiceResponse<>("success", characterBean);
 
 		return new ResponseEntity<>(svcs, HttpStatus.OK);

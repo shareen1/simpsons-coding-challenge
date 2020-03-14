@@ -59,8 +59,6 @@ $(document)
 										// '+data["firstName"] +'ChId
 										// :'+data["chId"]+this.id );
 										if (this.id == "edit") {
-											alert('Are you sure you want to edit?');
-
 											var firstName = data["firstName"];
 											var lastName = data["lastName"];
 											var age = data["age"];
@@ -166,7 +164,8 @@ $(document)
 															if (result.status == "success") {
 																window.location
 																		.replace("http://localhost:8083");
-																sleep(1000);
+																alert('The information was successfully updated.');
+																
 																$(
 																"#test")
 																.html(
